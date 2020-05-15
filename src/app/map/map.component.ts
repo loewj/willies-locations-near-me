@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { } from 'googlemaps';
 import { ApiService } from '../api.service';
 import { fromEventPattern, Subscription, Observable, interval } from 'rxjs';
@@ -12,6 +12,7 @@ import { debounce } from 'rxjs/operators';
 export class MapComponent implements OnInit {
 
   @ViewChild('map', { static: true }) mapElement: any;
+  @ViewChild('inputEl', { static: true }) inputElement: ElementRef;
 
   map: google.maps.Map;
 
@@ -24,6 +25,8 @@ export class MapComponent implements OnInit {
   selectedTab = 0;
 
   defaultCoord = { lat: 42.363744, lng: -71.059887 }
+
+  searchBox;
 
   constructor(private apiService: ApiService) { }
 
@@ -289,6 +292,41 @@ export class MapComponent implements OnInit {
       this.selectedTab = tab;
       this.setSelectedLayer();
     })
+
+    this.searchBox = new google.maps.places.SearchBox(this.inputElement.nativeElement);
+    this.setupSearchBoxListener()
+
+  }
+
+  setupSearchBoxListener() {
+
+    this.searchBox.addListener("places_changed", () => {
+
+      let places = this.searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // For each place, get the icon, name and location.
+      let bounds = new google.maps.LatLngBounds();
+      places.forEach(function (place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      this.map.fitBounds(bounds);
+    });
+
+    return this.map;
 
   }
 

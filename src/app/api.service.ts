@@ -43,7 +43,7 @@ export class ApiService {
           title: onPrem[i].retailAccount,
           label: this.markerLabels.charAt(i),
           address: data.formattedAddress,
-          addressLink: `https://www.google.com/maps/search/?api=1&${data.formattedAddress}`
+          addressLink: encodeURI(`https://www.google.com/maps/search/?api=1&query=${data.formattedAddress}`)
         });
       }
 
@@ -54,7 +54,8 @@ export class ApiService {
           position: { lat: data.latitude, lng: data.longitude },
           title: offPrem[i].retailAccount,
           label: this.markerLabels.charAt(i),
-          address: data.formattedAddress
+          address: data.formattedAddress,
+          addressLink: encodeURI(`https://www.google.com/maps/search/?api=1&query=${data.formattedAddress}`)
         });
       }
 

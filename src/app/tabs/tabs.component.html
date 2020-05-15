@@ -31,7 +31,7 @@
                       <tr *ngFor="let retailLocation of retailLocations; index as i">
                           <th scope="row">{{ retailLocation.label }}</th>
                           <td>{{ retailLocation.title }}</td>
-                          <td>{{retailLocation.address}}</td>
+                          <td><a [href]="retailLocation.addressLink" target="_blank">{{retailLocation.address}}</a></td>
                       </tr>
     
                     <tr *ngIf="retailLocations.length == 0">
@@ -65,7 +65,7 @@
                       <tr *ngFor="let bar of bars; index as i">
                           <th scope="row">{{ bar.label }}</th>
                           <td>{{ bar.title }}</td>
-                          <td><a>{{bar.address}}</a></td>
+                          <td><a [href]="bar.addressLink" target="_blank">{{bar.address}}</a></td>
                       </tr>
     
                     <tr *ngIf="bars.length == 0">
