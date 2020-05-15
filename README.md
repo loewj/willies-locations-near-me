@@ -12,7 +12,11 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+This project uses ngx-build-plus. For building the prod bundle, the command will look something like this:
+
+```bash
+ng build --prod --single-bundle true --bundle-styles false --keep-styles false
+```
 
 ## Running unit tests
 
