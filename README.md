@@ -15,7 +15,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 This project uses ngx-build-plus. For building the prod bundle, the command will look something like this:
 
 ```bash
-ng build --prod --single-bundle true --bundle-styles false --keep-styles false
+ng build --prod --single-bundle=true --bundle-styles=false --keep-styles=false --extra-webpack-config webpack.partial.js -o
 ```
 
 ## Running unit tests
