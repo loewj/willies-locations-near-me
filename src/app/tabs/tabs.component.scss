@@ -1,0 +1,32 @@
+.tab-view-container {
+  height: 50vh;
+  position: relative;
+  // overflow-y: scroll;
+}
+
+.spinner-border {
+  margin-top: 5em;
+}
+
+.tableFixHead {
+  overflow-y: auto;
+  height: 93%;
+  width: 100%;
+  position: absolute;
+}
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
+
+/* Just common table stuff. Really. */
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 8px 16px;
+}
+th {
+  background: #eee;
+}

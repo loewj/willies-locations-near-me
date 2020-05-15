@@ -1,0 +1,82 @@
+<div class="tab-view-container">
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a (click)="setRetailMarkers()" class="nav-link active" id="home-tab" data-toggle="tab" href="#retail" role="tab" aria-controls="home" aria-selected="true">Retail</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="setBarMarkers()" class="nav-link" id="profile-tab" data-toggle="tab" href="#bars" role="tab" aria-controls="profile" aria-selected="false">Bars</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="retail" role="tabpanel" aria-labelledby="home-tab">
+            
+            <div *ngIf="requestPending == true" class="spinner-container text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="tableFixHead">
+                <table *ngIf="requestPending == false" id="off-prem-table" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr><th scope="row">${markerLabels.charAt(i)}</th><td>${onPrem[i].retailAccount}</td><td>${data.formattedAddress}</td></tr> -->
+                      <tr *ngFor="let retailLocation of retailLocations; index as i">
+                          <th scope="row">{{ retailLocation.label }}</th>
+                          <td>{{ retailLocation.title }}</td>
+                          <td>{{retailLocation.address}}</td>
+                      </tr>
+    
+                    <tr *ngIf="retailLocations.length == 0">
+                        <td colspan="3">No results</td>
+                    </tr>
+    
+                    </tbody>
+                  </table>
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" id="bars" role="tabpanel" aria-labelledby="profile-tab">
+            
+            <div *ngIf="requestPending == true" class="spinner-container text-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div class="tableFixHead">
+                <table *ngIf="requestPending == false" id="off-prem-table" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr><th scope="row">${markerLabels.charAt(i)}</th><td>${onPrem[i].retailAccount}</td><td>${data.formattedAddress}</td></tr> -->
+                      <tr *ngFor="let bar of bars; index as i">
+                          <th scope="row">{{ bar.label }}</th>
+                          <td>{{ bar.title }}</td>
+                          <td><a>{{bar.address}}</a></td>
+                      </tr>
+    
+                    <tr *ngIf="bars.length == 0">
+                        <td colspan="3">No results</td>
+                    </tr>
+    
+                    </tbody>
+                  </table>
+            </div>
+
+        </div>
+      </div>
+
+</div>
