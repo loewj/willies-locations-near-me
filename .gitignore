@@ -8,14 +8,14 @@
 
 # dependencies
 /node_modules
-/dist/willies-locations-near-me/*.woff2
-/dist/willies-locations-near-me/*.png
-/dist/willies-locations-near-me/*.eot
-/dist/willies-locations-near-me/*.svg
-/dist/willies-locations-near-me/*.ttf
-/dist/willies-locations-near-me/*.woff
-/dist/willies-locations-near-me/*.gif
-/dist/willies-locations-near-me/*.ico
+# /dist/willies-locations-near-me/*.woff2
+# /dist/willies-locations-near-me/*.png
+# /dist/willies-locations-near-me/*.eot
+# /dist/willies-locations-near-me/*.svg
+# /dist/willies-locations-near-me/*.ttf
+# /dist/willies-locations-near-me/*.woff
+# /dist/willies-locations-near-me/*.gif
+# /dist/willies-locations-near-me/*.ico
 
 # profiling files
 chrome-profiler-events*.json
