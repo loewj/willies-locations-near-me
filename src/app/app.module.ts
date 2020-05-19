@@ -7,16 +7,21 @@ import { TabsComponent } from './tabs/tabs.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+import {TabViewModule} from 'primeng/tabview';
+import {TableModule} from 'primeng/table';
+
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     TabsComponent,
-    DeliveryComponent
+    DeliveryComponent,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    TabViewModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

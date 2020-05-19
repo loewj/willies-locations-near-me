@@ -1,11 +1,5 @@
-<div class="tab-view-container">
-  <!-- <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a (click)="setRetailMarkers()" class="nav-item nav-link active" id="nav-retail-tab" data-toggle="tab" href="#nav-retail" role="tab" aria-controls="nav-retail" aria-selected="true">Retail</a>
-      <a (click)="setBarMarkers()" class="nav-item nav-link" id="nav-bars-tab" data-toggle="tab" href="#nav-bars" role="tab" aria-controls="nav-bars" aria-selected="false">Bars</a>
-    </div>
-  </nav> -->
-
+<!-- <div class="tab-view-container">
+  
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     <li class="nav-item">
       <a (click)="setRetailMarkers()" class="nav-link active btn" id="pills-retail-tab" data-toggle="pill" role="tab" aria-controls="pills-retail" data-target="#pills-retail" aria-selected="true">Retail</a>
@@ -68,7 +62,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr><th scope="row">${markerLabels.charAt(i)}</th><td>${onPrem[i].retailAccount}</td><td>${data.formattedAddress}</td></tr> -->
             <tr *ngFor="let bar of bars; index as i">
               <th scope="row">{{ bar.label }}</th>
               <td>{{ bar.title }}</td>
@@ -87,4 +80,69 @@
       </div>
     </div>
   </div>
+ -->
+ <p-tabView (onChange)="handleChange($event)" >
+     <p-tabPanel header="Retail" leftIcon="pi pi-calendar">
 
+      <div *ngIf="requestPending == true" class="spinner-container text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <p-table *ngIf="requestPending == false" [columns]="cols" [value]="retailLocations" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" pResizableColumn>
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns" class="ui-resizable-column">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    
+
+     </p-tabPanel>
+     <p-tabPanel header="Bars/Restaurants" leftIcon="pi pi-inbox">
+         
+      <div *ngIf="requestPending == true" class="spinner-container text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <p-table *ngIf="requestPending == false" [columns]="cols" [value]="bars" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" pResizableColumn>
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns" class="ui-resizable-column">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+     </p-tabPanel>
+ </p-tabView>

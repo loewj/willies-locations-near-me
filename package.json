@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.1",
+    "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.1",
     "@angular/compiler": "~9.1.1",
     "@angular/core": "~9.1.1",
@@ -23,6 +24,7 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "ngx-build-plus": "^9.0.6",
+    "primeng": "^9.0.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
