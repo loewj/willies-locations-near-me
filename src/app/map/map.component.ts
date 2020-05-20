@@ -15,6 +15,7 @@ export class MapComponent implements OnInit {
   @ViewChild('inputEl', { static: true }) inputElement: ElementRef;
 
   map: google.maps.Map;
+  requestPending: boolean = false;
 
   mapObservable: Observable<any>;
   mapSubscription: Subscription;
@@ -27,6 +28,12 @@ export class MapComponent implements OnInit {
   defaultCoord = { lat: 42.363744, lng: -71.059887 }
 
   searchBox;
+  cancelNextReposition = false;
+
+  retailInfoWindows = [];
+  barInfoWindows = [];
+
+  activeInfoWindow;
 
   constructor(private apiService: ApiService) { }
 
@@ -268,18 +275,30 @@ export class MapComponent implements OnInit {
     ).pipe(debounce(() => interval(1500)));
 
     this.mapSubscription = this.mapObservable.subscribe(() => {
-      this.apiService.fetchLocations(this.map.getBounds());
+      if (this.cancelNextReposition == true) {
+        this.cancelNextReposition = false;
+      } else {
+        this.apiService.fetchLocations(this.map.getBounds(), this.map.getCenter());
+      }
     });
 
     this.apiService.tabData$.subscribe((data: any) => {
+
       this.setMapOnAll(this.barMarkers, true);
       this.setMapOnAll(this.retailMarkers, true);
-      this.retailMarkers = this.getMarkers(data.offPrem);
-      this.barMarkers = this.getMarkers(data.onPrem);
+
+      const offPremData = this.getMarkers(data.offPrem);
+      this.retailMarkers = offPremData.map(el => el.marker);
+      this.retailInfoWindows = offPremData.map(el => el.infowindow);
+
+      const onPremData = this.getMarkers(data.onPrem);
+      this.barMarkers = onPremData.map(el => el.marker);
+      this.barInfoWindows = onPremData.map(el => el.infowindow);
 
     })
 
     this.apiService.loadingSubject.subscribe(isLoading => {
+      this.requestPending = isLoading;
       if (isLoading == false) {
         this.setSelectedLayer();
       }
@@ -295,6 +314,25 @@ export class MapComponent implements OnInit {
 
     this.searchBox = new google.maps.places.SearchBox(this.inputElement.nativeElement);
     this.setupSearchBoxListener()
+
+    this.apiService.tableClicked$.subscribe((data: any) => {
+
+      if (this.activeInfoWindow) {
+        this.activeInfoWindow.close();
+      }
+
+      // pass in the on/off prem markers
+      if (data.onOffPrem == "ON") {
+        this.activeInfoWindow = this.barInfoWindows[data.index];
+        this.barInfoWindows[data.index].open(this.map, this.barMarkers[data.index]);
+      } else if (data.onOffPrem == "OFF") {
+        this.activeInfoWindow = this.retailInfoWindows[data.index];
+        this.retailInfoWindows[data.index].open(this.map, this.retailMarkers[data.index]);
+      }
+
+      this.cancelNextReposition = true;
+
+    });
 
   }
 
@@ -358,24 +396,59 @@ export class MapComponent implements OnInit {
 
   getMarkers(data) {
 
-    return data.map(el => {
-      return new google.maps.Marker({
+    const markersAndWindows = data.map(el => {
+
+      const infowindow = new google.maps.InfoWindow({
+        content: el.contentString
+      });
+
+
+      const marker = new google.maps.Marker({
         position: el.position,
         title: el.title,
         label: el.label
       })
+
+      marker.addListener('click', (event) => {
+
+        if (this.activeInfoWindow) { this.activeInfoWindow.close(); }
+        infowindow.open(this.map, marker);
+        this.apiService.emitMarkerClicked({ onOffPrem: el.onOffPrem, index: el.index });
+        this.cancelNextReposition = true;
+        this.activeInfoWindow = infowindow;
+      });
+
+      return { marker: marker, infowindow: infowindow };
+
     });
+
+    return markersAndWindows;
 
   }
 
   setMapOnAll(mapMarkers, remove) {
+
+    const bounds = new google.maps.LatLngBounds();
+
     for (var i = 0; i < mapMarkers.length; i++) {
+      
       if (remove) {
         mapMarkers[i].setMap(null);
       } else {
+
+        if (mapMarkers[i].getVisible()) {
+          bounds.extend(mapMarkers[i].getPosition());
+        }
+
         mapMarkers[i].setMap(this.map);
       }
     }
+
+    if (!remove && mapMarkers.length > 0) {
+      this.map.fitBounds(bounds);
+      this.cancelNextReposition = true;
+    }
+
   }
 
 }

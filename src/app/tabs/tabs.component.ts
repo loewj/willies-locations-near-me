@@ -20,17 +20,28 @@ export class TabsComponent implements OnInit {
 
   retailLocations: Array<any> = [];
   bars: Array<any> = [];
-  // delivery: Array<DeliveryOption> = [];
+  selectedLocation = null;
+  delivery: Array<any> = [];
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
     this.apiService.tabData$.subscribe((data: any) => {
+
       this.retailLocations = data.offPrem;
       this.bars = data.onPrem;
+      this.delivery = data.delivery
+
     })
     this.apiService.loadingSubject.subscribe(isLoading => {
       this.requestPending = isLoading;
+    })
+    this.apiService.locationSelected$.subscribe((selected: any) => {
+      if (selected.onOffPrem == "ON") {
+        this.selectedLocation = this.bars[selected.index]
+      } else if (selected.onOffPrem == "OFF") {
+        this.selectedLocation = this.retailLocations[selected.index]
+      }
     })
   }
 
@@ -46,6 +57,10 @@ export class TabsComponent implements OnInit {
       this.apiService.toggleMarkerTab(1);
     }
 
+  }
+
+  rowClicked(rowData) {
+    this.apiService.emitTableClicked(rowData);
   }
 
 }

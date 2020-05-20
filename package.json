@@ -24,6 +24,7 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "ngx-build-plus": "^9.0.6",
+    "primeicons": "^3.0.0-rc.1",
     "primeng": "^9.0.6",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

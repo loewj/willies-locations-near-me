@@ -6,9 +6,11 @@ import { MapComponent } from './map/map.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {TabViewModule} from 'primeng/tabview';
 import {TableModule} from 'primeng/table';
+import {AccordionModule} from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {TableModule} from 'primeng/table';
     BrowserModule,
     HttpClientModule,
     TabViewModule,
-    TableModule
+    TableModule,
+    AccordionModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
