@@ -7,7 +7,11 @@
 </p-accordion>
  
  <p-tabView (onChange)="handleChange($event)" >
-     <p-tabPanel header="Retail" leftIcon="pi pi-calendar">
+     <p-tabPanel header="Retail" leftIcon="pi pi-shopping-cart">
+
+        <p *ngIf="retailLocations.length == 0">
+            No results here. Try another area.
+        </p>
 
       <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="retailLocations" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
@@ -33,7 +37,7 @@
     
 
      </p-tabPanel>
-     <p-tabPanel header="Bars/Restaurants" leftIcon="pi pi-inbox">
+     <p-tabPanel header="Bars/Restaurants" leftIcon="pi pi-users">
 
       <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="bars" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
