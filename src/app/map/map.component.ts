@@ -3,6 +3,7 @@ import { } from 'googlemaps';
 import { ApiService } from '../api.service';
 import { fromEventPattern, Subscription, Observable, interval } from 'rxjs';
 import { debounce } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -35,7 +36,10 @@ export class MapComponent implements OnInit {
 
   activeInfoWindow;
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+  ) { }
 
   ngOnInit(): void {
 
@@ -278,6 +282,13 @@ export class MapComponent implements OnInit {
       if (this.cancelNextReposition == true) {
         this.cancelNextReposition = false;
       } else {
+        this.router.navigate([], {
+          queryParams: {
+            lat: this.map.getCenter().lat(),
+            lng: this.map.getCenter().lng()
+          },
+          queryParamsHandling: 'merge',
+        });
         this.apiService.fetchLocations(this.map.getBounds(), this.map.getCenter());
       }
     });
