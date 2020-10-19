@@ -21,6 +21,8 @@ export class MapComponent implements OnInit {
   mapObservable: Observable<any>;
   mapSubscription: Subscription;
 
+  youAreHereMarker;
+
   retailMarkers: Array<any> = [];
   barMarkers: Array<any> = [];
 
@@ -67,6 +69,7 @@ export class MapComponent implements OnInit {
       if (this.cancelNextReposition == true) {
         this.cancelNextReposition = false;
       } else {
+        // write the lat/lng to the URL so Adam can watch for it
         this.router.navigate([], {
           queryParams: {
             lat: this.map.getCenter().lat(),
@@ -75,6 +78,20 @@ export class MapComponent implements OnInit {
           queryParamsHandling: 'merge',
         });
         this.apiService.fetchLocations(this.map.getBounds(), this.map.getCenter());
+        // place a 'you are here' marker
+        if (this.youAreHereMarker) {
+          this.setMapOnAll([this.youAreHereMarker], true)
+        }
+
+        this.youAreHereMarker = new google.maps.Marker({
+          position: {
+            lat: this.map.getCenter().lat(),
+            lng: this.map.getCenter().lng()
+          },
+          title: 'You are here',
+          icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-diamond.png'
+        })
+        this.youAreHereMarker.setMap(this.map);
       }
     });
 
