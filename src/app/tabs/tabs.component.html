@@ -1,65 +1,61 @@
 <p-accordion>
-    <p-accordionTab *ngFor="let deliveryOptions of delivery" [header]="deliveryOptions.title">
-       <ul>
-           <li *ngFor="let zipData of deliveryOptions.data">{{zipData}}</li>
-       </ul>
+    <p-accordionTab header="Markers">
+        <p-tabView (onChange)="handleChange($event)" >
+            <p-tabPanel header="Retail" leftIcon="pi pi-shopping-cart">
+       
+               <p *ngIf="retailLocations.length == 0">
+                   No results here. Try another area.
+               </p>
+       
+             <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="retailLocations" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
+               <ng-template pTemplate="colgroup" let-columns>
+                   <colgroup>
+                       <col *ngFor="let col of columns" [style.width]="col.width">
+                   </colgroup>
+               </ng-template>
+               <ng-template pTemplate="header" let-columns>
+                   <tr>
+                       <th *ngFor="let col of columns" pResizableColumn>
+                           {{col.header}}
+                       </th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-rowData let-columns="columns">
+                   <tr [pSelectableRow]="rowData" (click)="rowClicked(rowData)">
+                       <td *ngFor="let col of columns" class="ui-resizable-column">
+                           {{rowData[col.field]}}
+                       </td>
+                   </tr>
+               </ng-template>
+           </p-table>
+           
+       
+            </p-tabPanel>
+            <p-tabPanel header="Bars/Restaurants" leftIcon="pi pi-users">
+       
+             <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="bars" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
+               <ng-template pTemplate="colgroup" let-columns>
+                   <colgroup>
+                       <col *ngFor="let col of columns" [style.width]="col.width">
+                   </colgroup>
+               </ng-template>
+               <ng-template pTemplate="header" let-columns>
+                   <tr>
+                       <th *ngFor="let col of columns" pResizableColumn>
+                           {{col.header}}
+                       </th>
+                   </tr>
+               </ng-template>
+               <ng-template pTemplate="body" let-rowData let-columns="columns">
+                   <tr [pSelectableRow]="rowData" (click)="rowClicked(rowData)">
+                       <td *ngFor="let col of columns" class="ui-resizable-column">
+                           {{rowData[col.field]}}
+                       </td>
+                   </tr>
+               </ng-template>
+           </p-table>
+       
+            </p-tabPanel>
+        </p-tabView>
     </p-accordionTab>
 </p-accordion>
- 
- <p-tabView (onChange)="handleChange($event)" >
-     <p-tabPanel header="Retail" leftIcon="pi pi-shopping-cart">
-
-        <p *ngIf="retailLocations.length == 0">
-            No results here. Try another area.
-        </p>
-
-      <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="retailLocations" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" pResizableColumn>
-                    {{col.header}}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pSelectableRow]="rowData" (click)="rowClicked(rowData)">
-                <td *ngFor="let col of columns" class="ui-resizable-column">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-    
-
-     </p-tabPanel>
-     <p-tabPanel header="Bars/Restaurants" leftIcon="pi pi-users">
-
-      <p-table [loading]="requestPending" selectionMode="single" [(selection)]="selectedLocation" [columns]="cols" [value]="bars" [scrollable]="true" scrollHeight="600px" [resizableColumns]="true">
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" pResizableColumn>
-                    {{col.header}}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr [pSelectableRow]="rowData" (click)="rowClicked(rowData)">
-                <td *ngFor="let col of columns" class="ui-resizable-column">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-     </p-tabPanel>
- </p-tabView>

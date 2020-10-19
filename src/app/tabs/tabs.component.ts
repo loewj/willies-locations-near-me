@@ -30,7 +30,6 @@ export class TabsComponent implements OnInit {
 
       this.retailLocations = data.offPrem;
       this.bars = data.onPrem;
-      this.delivery = data.delivery
 
     })
     this.apiService.loadingSubject.subscribe(isLoading => {

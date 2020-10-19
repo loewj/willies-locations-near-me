@@ -100,42 +100,9 @@ export class ApiService {
 
       }
 
-      let formattedDeliveryOptions = [];
-      Object.entries(data.delivery).forEach(entry => {
-        let key = entry[0];
-        let value: any = entry[1];
-
-        value.sort(function (a, b) {
-          var textA = a.city.toUpperCase();
-          var textB = b.city.toUpperCase();
-          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
-
-        let cityMap = new Map();
-        for (let i = 0; i < value.length; i++) {
-          if (!cityMap.has(value[i].city)) {
-            cityMap.set(value[i].city, []);
-          }
-          let arr = cityMap.get(value[i].city);
-          arr.push(value[i].zip);
-          cityMap.set(value[i].city, arr);
-        }
-
-        const deliveredTo = []
-        cityMap.forEach((value, key) => {
-          deliveredTo.push(`${key}: ${value.join(", ")}`)
-        });
-
-        formattedDeliveryOptions.push({
-          title: `${key} (${value.length} zip codes)`,
-          data: deliveredTo
-        })
-      });
-
       this._tabDataSource.next({
         onPrem: onPremMarkers,
-        offPrem: offPremMarkers,
-        delivery: formattedDeliveryOptions
+        offPrem: offPremMarkers
       });
 
       this.loadingSubject.next(false);
