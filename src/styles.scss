@@ -3,3 +3,63 @@
 @import url("../node_modules/primeng/resources/primeng.min.css");
 @import url("../node_modules/primeng/resources/themes/nova-light/theme.css");
 @import url("../node_modules/primeicons/primeicons.css");
+
+body {
+
+    .ui-tabview .ui-tabview-panels {
+        padding: 0 !important;
+        border-bottom: 1px solid #c8c8c8 !important;
+    }
+
+    .ui-table .ui-table-tbody > tr.ui-state-highlight {
+        background-color: #091f40;
+        color: #ffffff;
+    }
+
+    .ui-table .ui-table-tbody > tr:nth-child(even).ui-state-highlight {
+        background-color: #091f40;
+        color: #ffffff;
+    }
+
+    .ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover a {
+        background-color: #ff9e18;
+        border: 1px solid #ff9e18;
+        color: #333333;
+    }
+
+    .ui-accordion .ui-accordion-header:not(.ui-state-disabled).ui-state-active a {
+        background-color: #ff9e18;
+        border: 1px solid #ff9e18;
+        color: #ffffff;
+        &:hover {
+            background-color: #ff9e18;
+            border: 1px solid #ff9e18;
+            color: #ffffff;
+        }
+    }
+
+    .ui-accordion .ui-accordion-content {
+        padding: 0.571em 1em;
+        border: 1px solid #ff9e18;
+        background-color: #ff9e18;
+        color: #333333;
+        padding: 0.571em 1em;
+    }
+
+    .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active, .ui-tabview.ui-tabview-bottom .ui-tabview-nav li.ui-state-active, .ui-tabview.ui-tabview-left .ui-tabview-nav li.ui-state-active, .ui-tabview.ui-tabview-right .ui-tabview-nav li.ui-state-active {
+        background-color: #091f40;
+        border: 1px solid #091f40;
+    }
+
+    .ui-accordion .ui-accordion-header a {
+        padding: 0.571em 1em;
+        border: 1px solid #c8c8c8;
+        color: #ffffff;
+        background-color: #ff9e18;
+        color: #ffffff;
+        font-weight: 700;
+        border-radius: 3px;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+}

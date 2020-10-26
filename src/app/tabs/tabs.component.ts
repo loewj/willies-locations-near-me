@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '../api.service';
-import { DeliveryOption } from '../types';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent implements OnInit {
 
