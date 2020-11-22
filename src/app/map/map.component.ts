@@ -5,6 +5,15 @@ import { fromEventPattern, Subscription, Observable, interval } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+declare global {
+  interface Window {
+    superbrew_starting_coords?: {
+      lat: number
+      lng: number
+    }
+  }
+}
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
