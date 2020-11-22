@@ -13,3 +13,12 @@ export interface Location {
     onOffPremises: string;
     retailAccount: string;
 }
+
+declare global {
+  interface Window {
+    superbrew_starting_coords?: {
+      lat: number
+      lng: number
+    }
+  }
+}

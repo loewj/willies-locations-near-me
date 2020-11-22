@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
 
   selectedTab = 0;
 
-  defaultCoord = { lat: 42.363744, lng: -71.059887 }
+  defaultCoord = window.superbrew_starting_coords || { lat: 42.363744, lng: -71.059887 }
 
   searchBox;
   cancelNextReposition = false;
@@ -244,7 +244,7 @@ export class MapComponent implements OnInit {
     const bounds = new google.maps.LatLngBounds();
 
     for (var i = 0; i < mapMarkers.length; i++) {
-      
+
       if (remove) {
         mapMarkers[i].setMap(null);
       } else {
